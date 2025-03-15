@@ -24,14 +24,9 @@ void DFS(int id, int ct)
 	}
 	for (int i = id; i < num.size(); i++)
 	{
-		if (visit[i] == 0)
-		{
-			visit[i] = 1;
-			output.push_back(num[i]);
-			DFS(i, ct + 1);
-			output.pop_back();
-			visit[i] = 0;
-		}
+		output.push_back(num[i]);
+		DFS(i + 1, ct + 1);
+		output.pop_back();
 	}
 	return;
 }
