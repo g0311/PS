@@ -4,9 +4,36 @@
 
 using namespace std;
 #define endl '\n'
+#define ll long long
 #define MAX 1'000'000'007
 
-vector<int> DP[1'000'000];
+int FCT(int N, int R)
+{
+	ll output = 1;
+	for (int i = N; i > N - R; i--)
+	{
+		output *= i;
+		output %= MAX;
+	}
+	return output;
+}
+
+ll _POW(ll N, ll R)
+{
+	if (R == 1)
+		return N % MAX;
+
+	if (R % 2 == 0)
+	{
+		ll half = _POW(N, R / 2);
+		return (half * half) % MAX;
+	}
+	else
+	{
+		ll half = _POW(N, R / 2);
+		return (((half * half) % MAX) * N) % MAX;
+	}
+}
 
 int main()
 {
@@ -17,18 +44,21 @@ int main()
 	int N, R;
 	cin >> N >> R;
 
-	for (int i = 1; i <= N; i++)
-	{
-		DP[i].push_back(1);
-		for (int j = 1; j < i; j++)
-		{
-			int X = (DP[i - 1][j - 1] + DP[i - 1][j]) % MAX;
-			DP[i].push_back(X);
-		}
-		DP[i].push_back(1);
-	}
+	ll S = FCT(N, R);
+	ll B = FCT(R, R);
+	B = _POW(B, MAX - 2);
 
-	cout << DP[N][R];
+	int output = ((S * B) % MAX);
+	cout << output;
 
 	return 0;
 }
+
+
+/*
+N! / (N-K)! * K!
+
+B	500'000'004	int
+895385839
+155117520
+*/
