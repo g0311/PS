@@ -23,15 +23,9 @@ int main()
         ll N;
         cin >> N;
 
-        if (N % 2 == 0)
-        {
-            N /= 2;
-            cout << (1LL << N) << endl;
-        }
-        else
-        {
-            cout << 0 << endl;
-        }
+        cout << (N % 2 ? 0 : (1LL << (N / 2))) << endl;
+            // 1LL << N => 2^N (정수 연산)
+			// pow(2, N) => 2^N (실수 연산) => 오차발생
     }
     return 0;
 }
