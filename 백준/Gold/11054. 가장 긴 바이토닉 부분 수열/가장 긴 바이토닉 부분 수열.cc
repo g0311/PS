@@ -17,43 +17,38 @@ int main()
 	
 	int N;
 	cin >> N;
-	vector<int> arr1(N);
-	vector<int> arr2(N);
+	vector<int> arr(N);
 	for (int i = 0; i < N; i++)
 	{
-		cin >> arr1[i];
-		arr2[i] = -arr1[i];
+		cin >> arr[i];
+	}
+
+	vector<int> DP1(N);
+	vector<int> DP2(N);
+	for (int i = 0; i < N; i++)
+	{
+		DP1[i] = 1;
+		for (int j = 0; j < i; j++)
+		{
+			if (arr[i] > arr[j])
+			{
+				DP1[i] = max(DP1[i], DP1[j] + 1);
+			}
+		}
 	}
 
 	int output = 0;
-	vector<int> DP1;
-	vector<int> DP2;
-	for (int i = 0; i < N; i++)
+	for (int i = N - 1; i >= 0; i--)
 	{
-		auto temp = lower_bound(DP1.begin(), DP1.end(), arr1[i]);
-		if (temp != DP1.end())
+		DP2[i] = 1;
+		for (int j = N - 1; j > i; j--)
 		{
-			*temp = arr1[i];
-		}
-		else
-		{
-			DP1.push_back(arr1[i]);
-		}
-
-		DP2.clear();
-		for (int j = i; j < N; j++)
-		{
-			auto temp = lower_bound(DP2.begin(), DP2.end(), arr2[j]);
-			if (temp != DP2.end())
+			if (arr[i] > arr[j])
 			{
-				*temp = arr2[j];
-			}
-			else
-			{
-				DP2.push_back(arr2[j]);
+				DP2[i] = max(DP2[i], DP2[j] + 1);
 			}
 		}
-		output = max(output, (int)DP1.size() + (int)DP2.size() - 1);
+		output = max(output, DP1[i] + DP2[i] - 1);
 	}
 	cout << output;
 
