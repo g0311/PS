@@ -59,7 +59,10 @@ int main()
 		{
 			int weight;
 			cin >> weight;
-			pq.push({ weight,i,j });
+			if(i <= j)
+			{
+				pq.push({ weight,i,j });
+			}
 		}
 	}
 	
